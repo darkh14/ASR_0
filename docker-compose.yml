@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+
+  web:
+    image: nginx:alpine
+    environment:
+      - HF_TOKEN=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
+    container_name: vm_nginx
+    ports:
+      - 8083:80
+    depends_on:
+      - app
+    volumes:
+      - ./.nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - custom
+  app:
+    container_name: asr0
+    image: darkh14/asr_lite:latest
+    ports:
+      - "8060:8060"
+    networks:
+      - custom
+
+networks:
+  custom:
+    driver: bridge
